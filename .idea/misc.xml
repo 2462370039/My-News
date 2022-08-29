@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/drawable/ic_baseline_account_box_24.xml" value="0.1925" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/drawable/shape_search_box.xml" value="0.3745" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/layout/activity_home.xml" value="0.31476449275362317" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/layout/activity_login.xml" value="0.23324275362318841" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/layout/activity_main.xml" value="0.23324275362318841" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/layout/activity_register.xml" value="0.23324275362318841" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/layout/fragment_collect.xml" value="0.23324275362318841" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/layout/fragment_home.xml" value="0.23324275362318841" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/layout/fragment_my.xml" value="0.23324275362318841" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/layout/fragment_video.xml" value="0.5453125" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/layout/item_video_layout.xml" value="0.3278985507246377" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1925" />
+        <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/xml/network_security_config.xml" value="0.23324275362318841" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

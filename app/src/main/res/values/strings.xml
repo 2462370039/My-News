@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">My News</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="account_hint">请输入账号</string>
+    <string name="password_hint">请输入密码</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_collect">收藏</string>
+    <string name="fragment_home">首页</string>
+    <string name="fragment_my">我的页面</string>
+    <string name="hint_home_search">搜索你喜欢的视频</string>
 </resources>
