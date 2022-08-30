@@ -60,23 +60,20 @@ public class VideoFragment extends BaseFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_video, container, false);
-
-        recyclerView = v.findViewById(R.id.recyclerView);
-        refreshLayout = v.findViewById(R.id.refreshLayout);
-        refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
-        refreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
-
-
-        return v;
+    protected int initLayout() {
+        return R.layout.fragment_video;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void initView() {
+        recyclerView = mRootView.findViewById(R.id.recyclerView);
+        refreshLayout = mRootView.findViewById(R.id.refreshLayout);
+        refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        refreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
+    }
+
+    @Override
+    protected void initDate() {
         //新建一个线性布局管理器   //getActivity() --> HomeActivity
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         //线性布局管理器 设置item垂直排列
@@ -126,6 +123,7 @@ public class VideoFragment extends BaseFragment {
         //RV必选项2：数据适配器
         recyclerView.setAdapter(videoAdapter);*/
     }
+
 
     private void getVideoList(boolean isRefresh){
         String token = getStringFromSp("token");
