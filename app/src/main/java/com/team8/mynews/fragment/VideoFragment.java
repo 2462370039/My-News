@@ -101,12 +101,17 @@ public class VideoFragment extends BaseFragment {
             Api.config(ApiConfig.VIDEO_LIST, params).getRequest(new TtitCallback() {
                 @Override
                 public void onSuccess(String res) {
-                    VideoListResponse response = new Gson().fromJson(res, VideoListResponse.class);
-                    if (null != response && response.getCode() == 0) {
-                        List<VideoEntity> datasets = response.getPage().getList();
-                        VideoAdapter videoAdapter = new VideoAdapter(getActivity(), datasets);
-                        recyclerView.setAdapter(videoAdapter);
-                    }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            VideoListResponse response = new Gson().fromJson(res, VideoListResponse.class);
+                            if (null != response && response.getCode() == 0) {
+                                List<VideoEntity> datasets = response.getPage().getList();
+                                VideoAdapter videoAdapter = new VideoAdapter(getActivity(), datasets);
+                                recyclerView.setAdapter(videoAdapter);
+                            }
+                        }
+                    });
                 }
 
                 @Override
