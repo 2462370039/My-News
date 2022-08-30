@@ -10,4 +10,6 @@ public class ApiConfig {
     public static final String LOGIN = "/app/login";
     public static final String REGISTER = "/app/register";
     public static final String VIDEO_LIST = "/app/videolist/list";
+
+    public static final int PAGE_SIZE = 5;
 }

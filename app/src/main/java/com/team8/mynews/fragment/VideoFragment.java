@@ -1,5 +1,6 @@
 package com.team8.mynews.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.team8.mynews.R;
 import com.team8.mynews.activity.LoginActivity;
 import com.team8.mynews.adapter.VideoAdapter;
@@ -35,6 +41,11 @@ public class VideoFragment extends BaseFragment {
 
     private String title;
     private RecyclerView recyclerView;
+    private RefreshLayout refreshLayout;
+    VideoAdapter videoAdapter;
+    private int pageNum = 3;
+
+    List<VideoEntity> datasets = new ArrayList<>();
 
     public VideoFragment() {
         // Required empty public constructor
@@ -53,7 +64,12 @@ public class VideoFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_video, container, false);
+
         recyclerView = v.findViewById(R.id.recyclerView);
+        refreshLayout = v.findViewById(R.id.refreshLayout);
+        refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+        refreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
+
 
         return v;
     }
@@ -68,7 +84,27 @@ public class VideoFragment extends BaseFragment {
         //RV必选项1：布局管理器
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        getVideoList();
+        videoAdapter = new VideoAdapter(getActivity());
+
+        //下拉刷新事件
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageNum = 3;
+                getVideoList(true);
+                Log.e("RorL", "刷新");
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                pageNum++;
+                getVideoList(false);
+                Log.e("RorL", "加载");
+            }
+        });
+        //第一次进入页面获取数据
+        getVideoList(true);
         /*
         //创建item的数据集 datasets
         List<VideoEntity> datasets = new ArrayList<>();
@@ -91,24 +127,58 @@ public class VideoFragment extends BaseFragment {
         recyclerView.setAdapter(videoAdapter);*/
     }
 
-    private void getVideoList(){
+    private void getVideoList(boolean isRefresh){
         String token = getStringFromSp("token");
         //token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjgiLCJpYXQiOjE2NjE3ODEzNTgsImV4cCI6MTY2MjM4NjE1OH0.NxQ4o2g-6HLwGRPyLZLCX3RDcXk4RY_icQtsRNYtr_E810WyVsIBqjKcGJCRSZbqB9HqQW_bpYHGwGmfhumQ6w";
         //Log.e("token", token);
         if (!StringUtils.isEmpty(token)) {
             HashMap<String, Object> params = new HashMap<>();
+
             params.put("token", token);
+            //请求5条数据，实现分页
+            params.put("page", pageNum);
+            params.put("limit", ApiConfig.PAGE_SIZE);
+            //请求数据
             Api.config(ApiConfig.VIDEO_LIST, params).getRequest(new TtitCallback() {
                 @Override
                 public void onSuccess(String res) {
                     getActivity().runOnUiThread(new Runnable() {
+                        @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void run() {
+            Log.e("onS", "有数据,page" + pageNum);
+                            if (isRefresh) {
+                                //获取到数据结束刷新效果
+                                refreshLayout.finishRefresh();
+                            }else {
+                                //获取到数据结束加载效果
+                                refreshLayout.finishLoadMore();
+                            }
+
                             VideoListResponse response = new Gson().fromJson(res, VideoListResponse.class);
                             if (null != response && response.getCode() == 0) {
-                                List<VideoEntity> datasets = response.getPage().getList();
-                                VideoAdapter videoAdapter = new VideoAdapter(getActivity(), datasets);
-                                recyclerView.setAdapter(videoAdapter);
+                                List<VideoEntity> list = response.getPage().getList();
+                                if (list != null && list.size() > 0) {//响应有数据
+                                    if (isRefresh) {
+                                        Log.e("", "更新datasets");
+                                        datasets.clear();
+                                        datasets = list;
+                                    } else {
+                                        Log.e("", "添加list");
+                                        datasets.addAll(list);
+                                    }
+                                    /* 在onViewCreated()中创建Adapter,这里仅通过setDatasets()更新datasets
+                                    videoAdapter = new VideoAdapter(getActivity(), datasets);*/
+                                    videoAdapter.setDatasets(datasets);
+                                    videoAdapter.notifyDataSetChanged();
+                                    recyclerView.setAdapter(videoAdapter);
+                                } else {
+                                    if (isRefresh) {
+                                        showToast("刷新不到新数据！");
+                                    }else {
+                                        showToast("加载不到更多数据！");
+                                    }
+                                }
                             }
                         }
                     });
@@ -116,7 +186,17 @@ public class VideoFragment extends BaseFragment {
 
                 @Override
                 public void onFailure(Exception e) {
-
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isRefresh) {
+                                refreshLayout.finishRefresh(true);
+                            } else {
+                                refreshLayout.finishLoadMore(true);
+                            }
+                            showToast("数据加载失败！");
+                        }
+                    });
                 }
             });
         }else {

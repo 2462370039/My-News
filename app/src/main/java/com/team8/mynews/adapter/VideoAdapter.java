@@ -26,6 +26,14 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context mContext;
     private List<VideoEntity> datasets;
 
+    public void setDatasets(List<VideoEntity> datasets) {
+        this.datasets = datasets;
+    }
+
+    public VideoAdapter(Context mContext) {
+        this.mContext = mContext;
+    }
+
     public VideoAdapter(Context context, List<VideoEntity> datasets){
         this.mContext = context;
         this.datasets = datasets;
@@ -56,7 +64,10 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return datasets.size();
+        if (datasets != null && datasets.size() > 0) {
+            return datasets.size();
+        }
+        return 0;
     }
 
     static  class ViewHolder extends RecyclerView.ViewHolder{
