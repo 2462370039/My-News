@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import xyz.doikki.videoplayer.player.VideoViewManager;
+
 /**
  * @introduction: BaseFragment
  * @author: T19
@@ -93,5 +95,12 @@ public abstract class BaseFragment extends Fragment {
     protected String getStringFromSp(String key){
         SharedPreferences sp = getActivity().getSharedPreferences("sp_tzh", MODE_PRIVATE);
         return sp.getString(key,"");
+    }
+
+    /**
+     * 子类可通过此方法直接拿到VideoViewManager
+     */
+    protected VideoViewManager getVideoViewManager() {
+        return VideoViewManager.instance();
     }
 }
