@@ -52,12 +52,12 @@ import xyz.doikki.videoplayer.player.VideoView;
 
 public class VideoFragment extends BaseFragment implements OnItemChildClickListener {
 
-    private String title;
+    private int categoryId;
     private RecyclerView recyclerView;
     private RefreshLayout refreshLayout;
     private    LinearLayoutManager linearLayoutManager;
     VideoAdapter videoAdapter;
-    private int pageNum = 3;
+    private int pageNum = 1;
 
     /**
      * DKPlayer
@@ -84,9 +84,9 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
     }
 
 
-    public static VideoFragment newInstance(String title) {
+    public static VideoFragment newInstance(int categoryId) {
         VideoFragment fragment = new VideoFragment();
-        fragment.title = title;
+        fragment.categoryId = categoryId;
         return fragment;
     }
 
@@ -140,7 +140,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                pageNum = 3;
+                pageNum = 1;
                 getVideoList(true);
                 Log.e("RorL", "刷新");
             }
@@ -301,8 +301,10 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
             //请求5条数据，实现分页
             params.put("page", pageNum);
             params.put("limit", ApiConfig.PAGE_SIZE);
+            params.put("categoryId", categoryId);
             //请求数据
             Api.config(ApiConfig.VIDEO_LIST, params).getRequest(new TtitCallback() {
+            //Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(new TtitCallback() {
                 @Override
                 public void onSuccess(String res) {
                     getActivity().runOnUiThread(new Runnable() {
@@ -339,6 +341,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
                                         showToast("刷新不到新数据！");
                                     }else {
                                         showToast("加载不到更多数据！");
+                                        pageNum--;
                                     }
                                 }
                             }
@@ -355,6 +358,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
                                 refreshLayout.finishRefresh(true);
                             } else {
                                 refreshLayout.finishLoadMore(true);
+                                pageNum--;
                             }
                             showToast("数据加载失败！");
                         }
