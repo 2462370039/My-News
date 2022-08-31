@@ -82,6 +82,7 @@ public class VideoFragment extends BaseFragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         videoAdapter = new VideoAdapter(getActivity());
+        recyclerView.setAdapter(videoAdapter);
 
         //下拉刷新事件
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -169,7 +170,6 @@ public class VideoFragment extends BaseFragment {
                                     videoAdapter = new VideoAdapter(getActivity(), datasets);*/
                                     videoAdapter.setDatasets(datasets);
                                     videoAdapter.notifyDataSetChanged();
-                                    recyclerView.setAdapter(videoAdapter);
                                 } else {
                                     if (isRefresh) {
                                         showToast("刷新不到新数据！");
