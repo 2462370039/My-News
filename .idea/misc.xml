@@ -4,8 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Myspace/githubProject/My-News/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Myspace/githubProject/My-News/app/src/main/res/layout/fragment_news.xml" value="0.35833333333333334" />
         <entry key="..\:/Myspace/githubProject/My-News/app/src/main/res/layout/fragment_video.xml" value="0.3283514492753623" />
         <entry key="..\:/Myspace/githubProject/My-News/app/src/main/res/layout/item_video_layout.xml" value="0.15572916666666667" />
+        <entry key="..\:/Myspace/githubProject/My-News/app/src/main/res/layout/news_item_one.xml" value="0.35833333333333334" />
+        <entry key="..\:/Myspace/githubProject/My-News/app/src/main/res/layout/news_item_three.xml" value="0.35833333333333334" />
+        <entry key="..\:/Myspace/githubProject/My-News/app/src/main/res/layout/news_item_two.xml" value="0.35833333333333334" />
         <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/drawable/ic_baseline_account_box_24.xml" value="0.1925" />
         <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/drawable/shape_search_box.xml" value="0.3745" />
         <entry key="..\:/Myspace/githubProject/myProject/MyNews/app/src/main/res/layout/activity_home.xml" value="0.31476449275362317" />
