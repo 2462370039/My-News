@@ -111,82 +111,71 @@ public class NewsFragment extends BaseFragment{
      * @param isRefresh true下拉刷新,false上拉加载
      */
     private void getNewsList(boolean isRefresh){
-        String token = getStringFromSp("token");
-        //token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjgiLCJpYXQiOjE2NjE3ODEzNTgsImV4cCI6MTY2MjM4NjE1OH0.NxQ4o2g-6HLwGRPyLZLCX3RDcXk4RY_icQtsRNYtr_E810WyVsIBqjKcGJCRSZbqB9HqQW_bpYHGwGmfhumQ6w";
-        //Log.e("token", token);
-        if (!StringUtils.isEmpty(token)) {
-            HashMap<String, Object> params = new HashMap<>();
+        HashMap<String, Object> params = new HashMap<>();
+        //请求5条数据，实现分页
+        params.put("page", pageNum);
+        params.put("limit", ApiConfig.PAGE_SIZE);
+        //请求数据
+        Api.config(ApiConfig.NEWS_LIST, params).getRequest(getActivity(), new TtitCallback() {
+            @Override
+            public void onSuccess(String res) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void run() {
+                        Log.e("onS", "有数据,page" + pageNum);
+                        if (isRefresh) {
+                            //获取到数据结束刷新效果
+                            refreshLayout.finishRefresh();
+                        }else {
+                            //获取到数据结束加载效果
+                            refreshLayout.finishLoadMore();
+                        }
 
-            params.put("token", token);
-            //请求5条数据，实现分页
-            params.put("page", pageNum);
-            params.put("limit", ApiConfig.PAGE_SIZE);
-            //请求数据
-            Api.config(ApiConfig.NEWS_LIST, params).getRequest(new TtitCallback() {
-                @Override
-                public void onSuccess(String res) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @SuppressLint("NotifyDataSetChanged")
-                        @Override
-                        public void run() {
-                            Log.e("onS", "有数据,page" + pageNum);
-                            if (isRefresh) {
-                                //获取到数据结束刷新效果
-                                refreshLayout.finishRefresh();
-                            }else {
-                                //获取到数据结束加载效果
-                                refreshLayout.finishLoadMore();
-                            }
-
-                            NewsListResponse response = new Gson().fromJson(res, NewsListResponse.class);
-                            if (null != response && response.getCode() == 0) {
-                                List<NewsEntity> list = response.getPage().getList();
-                                if (list != null && list.size() > 0) {//响应有数据
-                                    if (isRefresh) {
-                                        Log.e("", "更新datasets");
-                                        datasets.clear();
-                                        datasets = list;
-                                    } else {
-                                        Log.e("", "添加list");
-                                        datasets.addAll(list);
-                                    }
-                                    /* 在onViewCreated()中创建Adapter,这里仅通过setDatasets()更新datasets
-                                    videoAdapter = new VideoAdapter(getActivity(), datasets);*/
-                                    newsAdapter.setDatasets(datasets);
-                                    newsAdapter.notifyDataSetChanged();
+                        NewsListResponse response = new Gson().fromJson(res, NewsListResponse.class);
+                        if (null != response && response.getCode() == 0) {
+                            List<NewsEntity> list = response.getPage().getList();
+                            if (list != null && list.size() > 0) {//响应有数据
+                                if (isRefresh) {
+                                    Log.e("", "更新datasets");
+                                    datasets.clear();
+                                    datasets = list;
                                 } else {
-                                    if (isRefresh) {
-                                        showToast("刷新不到新数据！");
-                                    }else {
-                                        showToast("加载不到更多数据！");
-                                        pageNum--;
-                                    }
+                                    Log.e("", "添加list");
+                                    datasets.addAll(list);
+                                }
+                                /* 在onViewCreated()中创建Adapter,这里仅通过setDatasets()更新datasets
+                                videoAdapter = new VideoAdapter(getActivity(), datasets);*/
+                                newsAdapter.setDatasets(datasets);
+                                newsAdapter.notifyDataSetChanged();
+                            } else {
+                                if (isRefresh) {
+                                    showToast("刷新不到新数据！");
+                                }else {
+                                    showToast("加载不到更多数据！");
+                                    pageNum--;
                                 }
                             }
                         }
-                    });
-                }
+                    }
+                });
+            }
 
-                @Override
-                public void onFailure(Exception e) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (isRefresh) {
-                                refreshLayout.finishRefresh(true);
-                            } else {
-                                refreshLayout.finishLoadMore(true);
-                                pageNum--;
-                            }
-                            showToast("数据加载失败！");
+            @Override
+            public void onFailure(Exception e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isRefresh) {
+                            refreshLayout.finishRefresh(true);
+                        } else {
+                            refreshLayout.finishLoadMore(true);
+                            pageNum--;
                         }
-                    });
-                }
-            });
-        }else {
-            navigateTo(LoginActivity.class);
-            showToastSync("token为空,请先登录！");
-        }
-
+                        showToast("数据加载失败！");
+                    }
+                });
+            }
+        });
     }
 }

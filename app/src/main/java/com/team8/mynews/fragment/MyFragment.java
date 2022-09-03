@@ -1,60 +1,62 @@
 package com.team8.mynews.fragment;
 
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
+import android.annotation.SuppressLint;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.team8.mynews.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MyFragment extends Fragment {
+import butterknife.BindView;
+import butterknife.OnClick;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class MyFragment extends BaseFragment {
+
+    @BindView(R.id.img_header)
+    ImageView imgHeader;
 
     public MyFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment MyFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static MyFragment newInstance() {
         MyFragment fragment = new MyFragment();
         return fragment;
     }
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    protected int initLayout() {
+        return R.layout.fragment_my;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my, container, false);
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initDate() {
+
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick({R.id.img_header, R.id.rl_collect, R.id.rl_skin, R.id.rl_logout})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.img_header:
+                showToast("更换头像");
+                break;
+            case R.id.rl_collect:
+                showToast("收藏");
+                break;
+            case R.id.rl_skin:
+                showToast("换肤");
+                break;
+            case R.id.rl_logout:
+                showToast("退出登录！");
+                break;
+        }
     }
 }

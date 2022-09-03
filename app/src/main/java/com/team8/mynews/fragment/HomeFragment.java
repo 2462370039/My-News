@@ -74,12 +74,11 @@ public class HomeFragment extends BaseFragment {
      * 获取视频类型列表
      */
     private void getVideoCategoryList(){
+        /*//在响应成功时，会对code进行401判断，这里就不再需要进行token判断
         String token = getStringFromSp("token");
-        if (!StringUtils.isEmpty(token)) {
+        if (!StringUtils.isEmpty(token)) {*/
             HashMap<String, Object> params = new HashMap<>();
-            params.put("token", token);
-
-            Api.config(ApiConfig.VIDEO_CATEGORY_LIST, params).getRequest(new TtitCallback() {
+            Api.config(ApiConfig.VIDEO_CATEGORY_LIST, params).getRequest(getActivity(), new TtitCallback() {
                 @Override
                 public void onSuccess(String res) {
                     getActivity().runOnUiThread(new Runnable() {
@@ -111,82 +110,7 @@ public class HomeFragment extends BaseFragment {
                 public void onFailure(Exception e) {
 
                 }
-            });
-        }else {
-            navigateTo(LoginActivity.class);
-            showToastSync("请先登录！");
-        }
-        /*
-        String token = getStringFromSp("token");
-        //token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjgiLCJpYXQiOjE2NjE3ODEzNTgsImV4cCI6MTY2MjM4NjE1OH0.NxQ4o2g-6HLwGRPyLZLCX3RDcXk4RY_icQtsRNYtr_E810WyVsIBqjKcGJCRSZbqB9HqQW_bpYHGwGmfhumQ6w";
-        //Log.e("token", token);
-        if (!StringUtils.isEmpty(token)) {
-            HashMap<String, Object> params = new HashMap<>();
-
-            params.put("token", token);
-            //请求5条数据，实现分页
-            params.put("page", pageNum);
-            params.put("limit", ApiConfig.PAGE_SIZE);
-            //请求数据
-            Api.config(ApiConfig.VIDEO_LIST, params).getRequest(new TtitCallback() {
-                @Override
-                public void onSuccess(String res) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @SuppressLint("NotifyDataSetChanged")
-                        @Override
-                        public void run() {
-                            Log.e("onS", "有数据,page" + pageNum);
-                            if (isRefresh) {
-                                //获取到数据结束刷新效果
-                                refreshLayout.finishRefresh();
-                            }else {
-                                //获取到数据结束加载效果
-                                refreshLayout.finishLoadMore();
-                            }
-
-                            VideoListResponse response = new Gson().fromJson(res, VideoListResponse.class);
-                            if (null != response && response.getCode() == 0) {
-                                List<VideoEntity> list = response.getPage().getList();
-                                if (list != null && list.size() > 0) {//响应有数据
-                                    if (isRefresh) {
-                                        Log.e("", "更新datasets");
-                                        datasets.clear();
-                                        datasets = list;
-                                    } else {
-                                        Log.e("", "添加list");
-                                        datasets.addAll(list);
-                                    }
-                                    *//* 在onViewCreated()中创建Adapter,这里仅通过setDatasets()更新datasets
-                                    videoAdapter = new VideoAdapter(getActivity(), datasets);*//*
-                                    videoAdapter.setDatasets(datasets);
-                                    videoAdapter.notifyDataSetChanged();
-                                } else {
-                                    if (isRefresh) {
-                                        showToast("刷新不到新数据！");
-                                    }else {
-                                        showToast("加载不到更多数据！");
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (isRefresh) {
-                                refreshLayout.finishRefresh(true);
-                            } else {
-                                refreshLayout.finishLoadMore(true);
-                            }
-                            showToast("数据加载失败！");
-                        }
-                    });
-                }
-            });
+            });/*
         }else {
             navigateTo(LoginActivity.class);
             showToastSync("请先登录！");

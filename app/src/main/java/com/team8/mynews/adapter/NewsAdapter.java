@@ -18,12 +18,13 @@ import com.team8.mynews.entity.NewsEntity;
 import com.team8.mynews.entity.VideoEntity;
 import com.team8.mynews.view.CircleTransform;
 
+import java.io.Serializable;
 import java.util.List;
 
 import xyz.doikki.videocontroller.component.PrepareView;
 
 /**
- * @introduction: Video适配器
+ * @introduction: News适配器
  * @author: T19
  * @time: 2022.08.29 18:25
  */
@@ -206,4 +207,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+
+    //
+    public interface OnItemClickListener{
+        void onItemClick(Serializable obj);
+    }
 }

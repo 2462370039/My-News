@@ -1,10 +1,13 @@
 package com.team8.mynews.api;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.team8.mynews.activity.LoginActivity;
 import com.team8.mynews.utils.StringUtils;
 
 import org.json.JSONException;
@@ -86,10 +89,15 @@ public class Api {
      * get请求
      * @param callback 回调接口
      */
-    public void getRequest(final TtitCallback callback){
+    public void getRequest(Context context, final TtitCallback callback){
+        //获取token
+        SharedPreferences sp = context.getSharedPreferences("sp_tzh", Context.MODE_PRIVATE);
+        String token = sp.getString("token", "");
+
         String url = getAppendUrl(requestUrl, mParams);
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("token", token)
                 .get()
                 .build();
         Call call = client.newCall(request);
@@ -103,6 +111,17 @@ public class Api {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 final String res = response.body().string();
+                try {
+                    JSONObject jsonObject = new JSONObject(res);
+                    String code = jsonObject.getString("code");
+                    if (code.equals("401")){//token失效时跳转到登录页面
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        context.startActivity(intent);
+                        //这时候就不需要再在获取数据时进行token的判断
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 callback.onSuccess(res);
             }
         });

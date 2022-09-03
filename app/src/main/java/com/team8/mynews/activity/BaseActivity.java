@@ -62,6 +62,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void navigateToWithFlag(Class activity, int flags){
+        Intent intent = new Intent(mContext, activity);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     /**
      * 保存token信息
      * @param key  "token"
@@ -73,5 +79,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         editor.clear();
         editor.putString(key, val);
         editor.apply();
+    }
+
+    /**
+     * 从XML文件中获取数据值
+     * @param key 要获取数据的key
+     * @return 要获取的数据
+     */
+    protected String getStringFromSp(String key){
+        SharedPreferences sp = getSharedPreferences("sp_tzh", MODE_PRIVATE);
+        return sp.getString(key,"");
     }
 }

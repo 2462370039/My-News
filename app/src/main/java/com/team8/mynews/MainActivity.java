@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.team8.mynews.activity.BaseActivity;
+import com.team8.mynews.activity.HomeActivity;
 import com.team8.mynews.activity.LoginActivity;
 import com.team8.mynews.activity.RegisterActivity;
+import com.team8.mynews.utils.StringUtils;
 
 public class MainActivity extends BaseActivity {
     private Button btnLogin;
@@ -31,6 +33,14 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initDate() {
+        if (!StringUtils.isEmpty(getStringFromSp("token"))){
+            /*
+            navigateToWithFlag(HomeActivity.class,
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);*/
+            navigateTo(HomeActivity.class);
+            finish();
+        }
+
         //为登录按钮绑定点击事件
         /* 原方式
         btnLogin.setOnClickListener(new View.OnClickListener() {

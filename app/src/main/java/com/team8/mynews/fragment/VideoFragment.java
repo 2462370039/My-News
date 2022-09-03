@@ -298,15 +298,13 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         //Log.e("token", token);
         if (!StringUtils.isEmpty(token)) {
             HashMap<String, Object> params = new HashMap<>();
-
-            params.put("token", token);
             //请求5条数据，实现分页
             params.put("page", pageNum);
             params.put("limit", ApiConfig.PAGE_SIZE);
             params.put("categoryId", categoryId);
             //请求数据
             //Api.config(ApiConfig.VIDEO_LIST, params).getRequest(new TtitCallback() {
-            Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(new TtitCallback() {
+            Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(getActivity(), new TtitCallback() {
                 @Override
                 public void onSuccess(String res) {
                     getActivity().runOnUiThread(new Runnable() {
