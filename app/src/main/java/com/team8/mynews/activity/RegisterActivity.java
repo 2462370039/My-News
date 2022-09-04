@@ -58,7 +58,7 @@ public class RegisterActivity extends BaseActivity {
             HashMap<String, Object> params = new HashMap<>();
             params.put("mobile", account);
             params.put("password", password);
-            Api.config(ApiConfig.REGISTER, params).postRequest(new TtitCallback() {
+            Api.config(ApiConfig.REGISTER, params).postRequest(mContext, new TtitCallback() {
                 @Override
                 public void onSuccess(String res) {
                     Log.e("onSuccess", res);

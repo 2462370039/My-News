@@ -52,12 +52,14 @@ import xyz.doikki.videoplayer.player.VideoView;
 
 public class VideoFragment extends BaseFragment implements OnItemChildClickListener {
 
-    private int categoryId;
+
     private RecyclerView recyclerView;
     private RefreshLayout refreshLayout;
     private    LinearLayoutManager linearLayoutManager;
-    VideoAdapter videoAdapter;
+    private VideoAdapter videoAdapter;
+
     private int pageNum = 1;
+    private int categoryId;
 
     /**
      * DKPlayer
@@ -142,7 +144,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pageNum = 1;
                 getVideoList(true);
-                Log.e("RorL", "刷新");
+                Log.e("RorL", "刷新视频");
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -150,7 +152,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 pageNum++;
                 getVideoList(false);
-                Log.e("RorL", "加载");
+                Log.e("RorL", "加载视频");
             }
         });
         //第一次进入页面获取数据
@@ -296,15 +298,13 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
         //Log.e("token", token);
         if (!StringUtils.isEmpty(token)) {
             HashMap<String, Object> params = new HashMap<>();
-
-            params.put("token", token);
             //请求5条数据，实现分页
             params.put("page", pageNum);
             params.put("limit", ApiConfig.PAGE_SIZE);
             params.put("categoryId", categoryId);
             //请求数据
-            Api.config(ApiConfig.VIDEO_LIST, params).getRequest(new TtitCallback() {
-            //Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(new TtitCallback() {
+            //Api.config(ApiConfig.VIDEO_LIST, params).getRequest(new TtitCallback() {
+            Api.config(ApiConfig.VIDEO_LIST_BY_CATEGORY, params).getRequest(getActivity(), new TtitCallback() {
                 @Override
                 public void onSuccess(String res) {
                     getActivity().runOnUiThread(new Runnable() {
