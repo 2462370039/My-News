@@ -8,8 +8,10 @@ import android.os.IInterface;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import xyz.doikki.videoplayer.player.VideoViewManager;
 
@@ -104,4 +106,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected VideoViewManager getVideoViewManager() {
         return VideoViewManager.instance();
     }
+
+    /*@NonNull
+    @Override
+    public AppCompatDelegate getDelegate() {
+        return SkinAppCompatDelegateImpl.get(this, this);
+    }*/
 }
