@@ -1,5 +1,6 @@
 package com.team8.mynews.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -103,13 +104,13 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String result = response.body().string();
-                    *//* 转到主线程提示
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast(result);
-                        }
-                    });*//*
+                    //转到主线程提示
+                    //runOnUiThread(new Runnable() {
+                    //    @Override
+                    //    public void run() {
+                    //        showToast(result);
+                    //    }
+                    //});
                 }
             });
         }
@@ -126,7 +127,7 @@ public class LoginActivity extends BaseActivity {
             params.put("mobile", account);
             params.put("password", password);
 
-            Api.config(ApiConfig.LOGIN, params).postRequest(new TtitCallback() {
+            Api.config(ApiConfig.LOGIN, params).postRequest(mContext, new TtitCallback() {
                 @Override
                 public void onSuccess(String res) {
                     /*
@@ -148,7 +149,10 @@ public class LoginActivity extends BaseActivity {
                         //editor.commit();
                         editor.apply();*/
                         saveStringToSp("token", token);
-                        navigateTo(HomeActivity.class);
+                        //navigateTo(HomeActivity.class);
+                        //登录逻辑：登录成功后，应该clear task，并将HomeActivity置为new Task的栈底
+                        navigateToWithFlag(HomeActivity.class,
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         showToastSync("登录成功！");
                         /*
                         loop之后的代码不会执行，所以跳转代码要放在showToast之前

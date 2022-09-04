@@ -8,8 +8,12 @@ import android.os.IInterface;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import xyz.doikki.videoplayer.player.VideoViewManager;
 
 /**
  * @introduction: BaseActivity
@@ -63,6 +67,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 跳转到activity 同时处理Task
+     * @param activity 目标Activity
+     * @param flags 处理标志 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
+     */
+    public void navigateToWithFlag(Class activity, int flags){
+        Intent intent = new Intent(mContext, activity);
+        intent.setFlags(flags);
+        startActivity(intent);
+    }
+
+    /**
      * 保存token信息
      * @param key  "token"
      * @param val  token值
@@ -74,4 +89,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         editor.putString(key, val);
         editor.apply();
     }
+
+    /**
+     * 从XML文件中获取数据值
+     * @param key 要获取数据的key
+     * @return 要获取的数据
+     */
+    protected String getStringFromSp(String key){
+        SharedPreferences sp = getSharedPreferences("sp_tzh", MODE_PRIVATE);
+        return sp.getString(key,"");
+    }
+
+    /**
+     * 子类可通过此方法直接拿到VideoViewManager
+     */
+    protected VideoViewManager getVideoViewManager() {
+        return VideoViewManager.instance();
+    }
+
+    /*@NonNull
+    @Override
+    public AppCompatDelegate getDelegate() {
+        return SkinAppCompatDelegateImpl.get(this, this);
+    }*/
 }

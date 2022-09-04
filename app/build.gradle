@@ -25,6 +25,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    sourceSets {main {res.srcDirs = ['src/main/res', 'src/main/res-night']}}
 }
 
 dependencies {
@@ -47,9 +48,15 @@ dependencies {
     implementation  'io.github.scwang90:refresh-header-classics:2.0.5'    //经典刷新头
     implementation  'io.github.scwang90:refresh-footer-classics:2.0.5'    //经典加载
 
-    /*implementation 'xyz.doikki.android.dkplayer:dkplayer-java:3.3.6'
+    //DKPlayer
+    implementation 'xyz.doikki.android.dkplayer:dkplayer-java:3.3.6'
     implementation 'xyz.doikki.android.dkplayer:dkplayer-ui:3.3.6'
     implementation 'xyz.doikki.android.dkplayer:player-exo:3.3.6'
     implementation 'xyz.doikki.android.dkplayer:player-ijk:3.3.6'
-    implementation 'xyz.doikki.android.dkplayer:videocache:3.3.6'*/
+    implementation 'xyz.doikki.android.dkplayer:videocache:3.3.6'
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 }

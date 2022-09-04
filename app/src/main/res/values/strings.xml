@@ -10,4 +10,6 @@
     <string name="fragment_home">首页</string>
     <string name="fragment_my">我的页面</string>
     <string name="hint_home_search">搜索你喜欢的视频</string>
+    <string name="news">资讯</string>
+    <string name="myCollect">我的收藏</string>
 </resources>
