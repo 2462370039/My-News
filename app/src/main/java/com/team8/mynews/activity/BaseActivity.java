@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import xyz.doikki.videoplayer.player.VideoViewManager;
+
 /**
  * @introduction: BaseActivity
  * @author: T19
@@ -89,5 +91,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected String getStringFromSp(String key){
         SharedPreferences sp = getSharedPreferences("sp_tzh", MODE_PRIVATE);
         return sp.getString(key,"");
+    }
+
+    /**
+     * 子类可通过此方法直接拿到VideoViewManager
+     */
+    protected VideoViewManager getVideoViewManager() {
+        return VideoViewManager.instance();
     }
 }
