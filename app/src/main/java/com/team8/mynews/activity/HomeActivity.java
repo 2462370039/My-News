@@ -3,15 +3,12 @@ package com.team8.mynews.activity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.Bundle;
-
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.team8.mynews.R;
 import com.team8.mynews.adapter.MyPagerAdapter;
 import com.team8.mynews.entity.TabEntity;
-import com.team8.mynews.fragment.CollectFragment;
 import com.team8.mynews.fragment.HomeFragment;
 import com.team8.mynews.fragment.MyFragment;
 import com.team8.mynews.fragment.NewsFragment;
@@ -24,13 +21,13 @@ public class HomeActivity extends BaseActivity {
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
 
-    private String[] mTitles = {"首页", "咨询", "我的"};
+    private String[] mTitles = {"首页", "资讯", "我的"};
     private int[] mIconUnselectIds = {
-            R.mipmap.tab_home_unselect, R.mipmap.tab_home_unselect,
-            R.mipmap.tab_home_unselect};
+            R.mipmap.tab_home_unselect, R.mipmap.tab_collect_unselect,
+            R.mipmap.tab_my_unselect};
     private int[] mIconSelectIds = {
-            R.mipmap.tab_home_select, R.mipmap.tab_home_select,
-            R.mipmap.tab_home_select};
+            R.mipmap.tab_home_selected, R.mipmap.tab_collect_selected,
+            R.mipmap.tab_my_selected};
 
     private ViewPager viewPager;
     private CommonTabLayout commonTabLayout;

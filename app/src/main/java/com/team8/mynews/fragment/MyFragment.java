@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.team8.mynews.R;
+import com.team8.mynews.activity.MyCollectActivity;
+import com.team8.mynews.adapter.MyCollectAdapter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -49,7 +51,7 @@ public class MyFragment extends BaseFragment {
                 showToast("更换头像");
                 break;
             case R.id.rl_collect:
-                showToast("收藏");
+                navigateTo(MyCollectActivity.class);
                 break;
             case R.id.rl_skin:
                 showToast("换肤");
