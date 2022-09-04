@@ -127,7 +127,7 @@ public class LoginActivity extends BaseActivity {
             params.put("mobile", account);
             params.put("password", password);
 
-            Api.config(ApiConfig.LOGIN, params).postRequest(new TtitCallback() {
+            Api.config(ApiConfig.LOGIN, params).postRequest(mContext, new TtitCallback() {
                 @Override
                 public void onSuccess(String res) {
                     /*

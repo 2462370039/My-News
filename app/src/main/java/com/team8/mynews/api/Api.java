@@ -1,5 +1,7 @@
 package com.team8.mynews.api;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -53,7 +55,9 @@ public class Api {
      * post请求
      * @param callback 回调接口
      */
-    public void postRequest(TtitCallback callback){
+    public void postRequest(Context context,TtitCallback callback){
+        SharedPreferences sp = context.getSharedPreferences("sp_tzh", MODE_PRIVATE);
+        String token = sp.getString("token", "");
         JSONObject jsonObject = new JSONObject(mParams);
         String jsonStr = jsonObject.toString();
         RequestBody requestBodyJson =
@@ -63,6 +67,7 @@ public class Api {
         Request request = new Request.Builder()
                 .url(requestUrl)
                 .addHeader("contentType", "application/json; charset=UTF-8")
+                .addHeader("token", token)
                 .post(requestBodyJson)
                 .build();
 
