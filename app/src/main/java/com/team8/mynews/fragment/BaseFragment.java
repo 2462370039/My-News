@@ -88,6 +88,17 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
+     * 跳转到activity 同时处理Task
+     * @param activity 目标Activity
+     * @param flags 处理标志 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
+     */
+    public void navigateToWithFlag(Class activity, int flags){
+        Intent intent = new Intent(getActivity(), activity);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    /**
      * 保存token信息到SharedPreferences存储对象中
      * @param key  "token"
      * @param val  token值
@@ -108,6 +119,18 @@ public abstract class BaseFragment extends Fragment {
         SharedPreferences sp = getActivity().getSharedPreferences("sp_tzh", MODE_PRIVATE);
         return sp.getString(key,"");
     }
+
+    /**
+     * 从XML文件中删除数据
+     * @param key 要删除数据的key
+     */
+    protected void removeByKey(String key){
+        SharedPreferences sp = getActivity().getSharedPreferences("sp_tzh", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove(key);
+        editor.apply();
+    }
+
 
     /**
      * 子类可通过此方法直接拿到VideoViewManager

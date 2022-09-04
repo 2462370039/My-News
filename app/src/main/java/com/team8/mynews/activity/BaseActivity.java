@@ -64,9 +64,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * 跳转到activity 同时处理Task
+     * @param activity 目标Activity
+     * @param flags 处理标志 Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
+     */
     public void navigateToWithFlag(Class activity, int flags){
         Intent intent = new Intent(mContext, activity);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(flags);
         startActivity(intent);
     }
 
