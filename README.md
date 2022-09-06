@@ -22,7 +22,7 @@
 - [DKVideoPlayer](https://github.com/Doikki/DKVideoPlayer)作为项目视频播放器
 - 使用Git作为整个APP项目的代码版本控制
 
-## 登录注册逻辑实现
+## post请求
 项目使用OkHttp作网络请求框架,封装成网络请求类Api<br>
 Android数据存储类SharedPreferences存储登录令牌token
 ```java
@@ -65,3 +65,5 @@ public void postRequest(Context context,TtitCallback callback){
     });
 }
 ```
+
+
