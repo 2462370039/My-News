@@ -311,7 +311,7 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
                         @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void run() {
-            Log.e("onS", "有数据,page" + pageNum);
+            Log.d("onS", "有数据,page" + pageNum);
                             if (isRefresh) {
                                 //获取到数据结束刷新效果
                                 refreshLayout.finishRefresh();
@@ -325,11 +325,11 @@ public class VideoFragment extends BaseFragment implements OnItemChildClickListe
                                 List<VideoEntity> list = response.getPage().getList();
                                 if (list != null && list.size() > 0) {//响应有数据
                                     if (isRefresh) {
-                                        Log.e("", "更新datasets");
+                                        Log.d("", "更新datasets");
                                         datasets.clear();
                                         datasets = list;
                                     } else {
-                                        Log.e("", "添加list");
+                                        Log.d("", "添加list");
                                         datasets.addAll(list);
                                     }
                                     /* 在onViewCreated()中创建Adapter,这里仅通过setDatasets()更新datasets

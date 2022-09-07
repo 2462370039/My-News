@@ -227,12 +227,12 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public void onSuccess(String res) {
                 Gson gson = new Gson();
                 BaseResponse response = gson.fromJson(res, BaseResponse.class);
-                Log.e("onSuccess","点赞收藏请求"+ response.getMsg());
+                Log.d("onSuccess","点赞收藏请求"+ response.getMsg());
             }
 
             @Override
             public void onFailure(Exception e) {
-                Log.e("onFailure","点赞收藏请求");
+                Log.d("onFailure","点赞收藏请求");
             }
         });
     }

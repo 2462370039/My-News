@@ -106,10 +106,4 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected VideoViewManager getVideoViewManager() {
         return VideoViewManager.instance();
     }
-
-    /*@NonNull
-    @Override
-    public AppCompatDelegate getDelegate() {
-        return SkinAppCompatDelegateImpl.get(this, this);
-    }*/
 }

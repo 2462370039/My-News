@@ -78,7 +78,7 @@ public class Api {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.e("onFailure", e.getMessage());
+                Log.d("onFailure", e.getMessage());
                 callback.onFailure(e);
             }
 
@@ -109,7 +109,7 @@ public class Api {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.e("onFailure", e.getMessage());
+                Log.d("onFailure", e.getMessage());
                 callback.onFailure(e);
             }
 

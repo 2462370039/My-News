@@ -90,7 +90,7 @@ public class NewsFragment extends BaseFragment{
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pageNum = 1;
                 getNewsList(true);
-                Log.e("RorL", "刷新咨询");
+                Log.d("RorL", "刷新咨询");
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -98,7 +98,7 @@ public class NewsFragment extends BaseFragment{
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 pageNum++;
                 getNewsList(false);
-                Log.e("RorL", "加载咨询");
+                Log.d("RorL", "加载咨询");
             }
         });
         //第一次进入页面获取数据
@@ -123,7 +123,7 @@ public class NewsFragment extends BaseFragment{
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void run() {
-                        Log.e("onS", "有数据,page" + pageNum);
+                        Log.d("onS", "有数据,page" + pageNum);
                         if (isRefresh) {
                             //获取到数据结束刷新效果
                             refreshLayout.finishRefresh();
@@ -137,11 +137,11 @@ public class NewsFragment extends BaseFragment{
                             List<NewsEntity> list = response.getPage().getList();
                             if (list != null && list.size() > 0) {//响应有数据
                                 if (isRefresh) {
-                                    Log.e("", "更新datasets");
+                                    Log.d("", "更新datasets");
                                     datasets.clear();
                                     datasets = list;
                                 } else {
-                                    Log.e("", "添加list");
+                                    Log.d("", "添加list");
                                     datasets.addAll(list);
                                 }
                                 /* 在onViewCreated()中创建Adapter,这里仅通过setDatasets()更新datasets
