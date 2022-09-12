@@ -19,6 +19,7 @@
 ## 技术点
 - 项目使用MVC模式作架构
 - OkHttp作为项目的数据传输和处理
+- Picasso作为图片加载框架
 - [DKVideoPlayer](https://github.com/Doikki/DKVideoPlayer)作为项目视频播放器
 - 使用Git作为整个APP项目的代码版本控制
 
